@@ -101,9 +101,9 @@ impl AssignProperty {
                 }
                 (true, false) => {
                     quote_spanned! {
-                        span => if let Some(__p_assign) = #assign {
+                        span => if let Some(p_assign) = #assign {
                             #block_stream
-                            #assign_fn(#self_assign_args __p_assign #args) #chain;
+                            #assign_fn(#self_assign_args p_assign #args) #chain;
                             #unblock_stream
                         }
                     }
@@ -112,8 +112,8 @@ impl AssignProperty {
                     quote_spanned! {
                         span =>
                             #block_stream
-                            for __elem in #assign {
-                                #assign_fn(#self_assign_args __elem #args) #chain;
+                            for elem in #assign {
+                                #assign_fn(#self_assign_args elem #args) #chain;
                             }
                             #unblock_stream
                     }
@@ -122,9 +122,9 @@ impl AssignProperty {
                     quote_spanned! {
                         span =>
                             #block_stream
-                            for __elem in #assign {
-                                if let Some(__p_assign) = __elem {
-                                    #assign_fn(#self_assign_args __p_assign #args) #chain;
+                            for elem in #assign {
+                                if let Some(p_assign) = elem {
+                                    #assign_fn(#self_assign_args p_assign #args) #chain;
                                 }
                             }
                             #unblock_stream

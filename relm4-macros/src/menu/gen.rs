@@ -72,7 +72,7 @@ impl MenuItem {
 
 impl SubMenu {
     fn submenu_stream(&self, parent_ident: &Ident) -> TokenStream2 {
-        let name = Ident::new(&format!("_{parent_ident}"), Span2::call_site());
+        let name = Ident::new(&format!("_{parent_ident}"), Span2::mixed_site());
         let gtk_import = crate::gtk_import();
         let expr = &self.expr;
 
@@ -103,16 +103,14 @@ impl MenuEntry {
         let ty = &self.action_ty;
 
         if let Some(value) = &self.value {
-            quote_spanned! {
-                expr.span() =>
-                    let new_entry = relm4::actions::RelmAction::<#ty>::to_menu_item_with_target_value(#expr, &#value);
-                    #parent_ident.append_item(&new_entry);
+            quote! {
+                let new_entry = relm4::actions::RelmAction::<#ty>::to_menu_item_with_target_value(#expr, &#value);
+                #parent_ident.append_item(&new_entry);
             }
         } else {
-            quote_spanned! {
-                expr.span() =>
-                    let new_entry = relm4::actions::RelmAction::<#ty>::to_menu_item(#expr);
-                    #parent_ident.append_item(&new_entry);
+            quote! {
+                let new_entry = relm4::actions::RelmAction::<#ty>::to_menu_item(#expr);
+                #parent_ident.append_item(&new_entry);
             }
         }
     }

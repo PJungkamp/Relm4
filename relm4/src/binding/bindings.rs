@@ -12,6 +12,7 @@ macro_rules! binding {
         }
 
         impl $name {
+            #[must_use]
             #[doc = "Create a new [`"]
             #[doc = stringify!($name)]
             #[doc = "`]."]
@@ -41,6 +42,7 @@ macro_rules! binding {
         }
 
         #[allow(missing_docs)]
+        #[allow(clippy::must_use_candidate)]
         mod $mod {
             use std::cell::RefCell;
 

@@ -162,9 +162,9 @@ pub(crate) fn generate_tokens(
                 widgets: &mut Self::Widgets,
                 sender: relm4::factory::#sender_ty<Self>,
             ) {
-                struct __DoNotReturnManually;
+                struct DoNotReturnManually;
 
-                let _no_manual_return: __DoNotReturnManually = (move || {
+                let _no_manual_return: DoNotReturnManually = (move || {
                     #[allow(unused_variables)]
                     let Self::Widgets {
                         #destructure_fields
@@ -176,7 +176,7 @@ pub(crate) fn generate_tokens(
                     // In post_view returning early is ok
                     (move || { #(#post_view)* })();
 
-                    __DoNotReturnManually
+                    DoNotReturnManually
                 })();
             }
         });

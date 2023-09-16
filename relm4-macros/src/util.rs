@@ -41,7 +41,7 @@ pub(super) fn self_ty_to_widgets_ty(self_ty: &TypePath) -> (Type, ImplItem) {
     let mut self_path = self_ty.clone();
     let last_seg = self_path.path.segments.last_mut().unwrap();
     last_seg.arguments = Default::default();
-    last_seg.ident = Ident::new(&format!("{}Widgets", last_seg.ident), last_seg.span());
+    last_seg.ident = Ident::new(&format!("{}Widgets", last_seg.ident), Span2::mixed_site());
 
     // Generate impl item for the trait impl
     let impl_item = syn::parse_quote_spanned! {
@@ -56,7 +56,7 @@ pub(super) fn strings_to_path(strings: &[&str]) -> Path {
         .iter()
         .map(|string| -> PathSegment {
             PathSegment {
-                ident: Ident::new(string, Span2::call_site()),
+                ident: Ident::new(string, Span2::mixed_site()),
                 arguments: PathArguments::None,
             }
         })
@@ -98,7 +98,7 @@ pub(super) fn verbatim_impl_item_fn(
             unsafety: None,
             abi: None,
             fn_token: syn::token::Fn::default(),
-            ident: Ident::new(name, Span2::call_site()),
+            ident: Ident::new(name, Span2::mixed_site()),
             generics: syn::Generics {
                 lt_token: None,
                 params: Punctuated::default(),
