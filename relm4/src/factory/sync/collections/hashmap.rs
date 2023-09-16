@@ -71,12 +71,12 @@ where
     }
 
     pub fn hasher<H: Hasher>(self, hasher: H) -> FactoryHashMapBuilder<K, C, H> {
-        let Self { widget, _key, .. } = self;
+        let Self { widget, .. } = self;
 
         FactoryHashMapBuilder {
             hasher,
             widget,
-            _key,
+            _key: PhantomData,
         }
     }
 
@@ -84,7 +84,7 @@ where
         let Self {
             widget,
             hasher,
-            _key,
+            ..
         } = self;
 
         let (output_sender, output_receiver) = crate::channel();
@@ -94,7 +94,7 @@ where
             output_sender,
             output_receiver,
             hasher,
-            _key,
+            _key: PhantomData,
         }
     }
 }
